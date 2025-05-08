@@ -1,7 +1,6 @@
 import { type Hex, HyperliquidError, type IRequestTransport, type MaybePromise } from "../base.ts";
 import type {
     ApproveAgentRequest,
-    ApproveAgentNoAgentNameRequest,
     ApproveBuilderFeeRequest,
     BatchModifyRequest,
     CancelByCloidRequest,
@@ -113,12 +112,6 @@ export interface WalletClientParameters<
 export type ApproveAgentParameters = Omit<
     ApproveAgentRequest["action"],
     "type" | "hyperliquidChain" | "signatureChainId" | "nonce"
->;
-
-/** Parameters for the {@linkcode WalletClient.approveAgentNoAgentName} method. */
-export type ApproveAgentNoAgentNameParameters = Omit<
-  ApproveAgentNoAgentNameRequest["action"],
-  "type" | "hyperliquidChain" | "signatureChainId" | "nonce"
 >;
 
 /** Parameters for the {@linkcode WalletClient.approveBuilderFee} method. */
@@ -577,40 +570,6 @@ export class WalletClient<
 
         // Send a request
         const request: ApproveAgentRequest = { action, signature, nonce: action.nonce };
-        const response = await this.transport.request("exchange", request, signal) as ErrorResponse | SuccessResponse;
-
-        // Validate a response
-        this._validateResponse(response);
-        return response;
-    }
-
-    async approveAgentNoAgentName(args: ApproveAgentNoAgentNameParameters, signal?: AbortSignal): Promise<SuccessResponse> {
-        // Construct an action
-        const action: ApproveAgentNoAgentNameRequest["action"] = {
-            ...args,
-            type: "approveAgent",
-            hyperliquidChain: this._getHyperliquidChain(),
-            signatureChainId: await this._getSignatureChainId(),
-            nonce: await this.nonceManager(),
-        };
-
-        // Sign the action
-        const signature = await signUserSignedAction({
-            wallet: this.wallet,
-            action,
-            types: {
-                "HyperliquidTransaction:ApproveAgent": [
-                    { name: "hyperliquidChain", type: "string" },
-                    { name: "agentAddress", type: "address" },
-                    { name: "agentName", type: "string" },
-                    { name: "nonce", type: "uint64" },
-                ],
-            },
-            chainId: parseInt(action.signatureChainId, 16),
-        });
-
-        // Send a request
-        const request: ApproveAgentNoAgentNameRequest = { action, signature, nonce: action.nonce };
         const response = await this.transport.request("exchange", request, signal) as ErrorResponse | SuccessResponse;
 
         // Validate a response

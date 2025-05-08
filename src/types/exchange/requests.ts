@@ -70,24 +70,6 @@ export interface ApproveAgentRequest extends BaseExchangeRequest {
         nonce: number;
         /** Agent address. */
         agentAddress: Hex;
-        /** Agent name. */
-        agentName: string;
-    };
-}
-
-export interface ApproveAgentNoAgentNameRequest extends BaseExchangeRequest {
-    /** Action to be performed. */
-    action: {
-        /** Type of action. */
-        type: "approveAgent";
-        /** HyperLiquid network. */
-        hyperliquidChain: "Mainnet" | "Testnet";
-        /** Chain ID used for signing. */
-        signatureChainId: Hex;
-        /** Unique request identifier (current timestamp in ms). */
-        nonce: number;
-        /** Agent address. */
-        agentAddress: Hex;
     };
 }
 
