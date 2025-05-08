@@ -75,6 +75,22 @@ export interface ApproveAgentRequest extends BaseExchangeRequest {
     };
 }
 
+export interface ApproveAgentNoAgentNameRequest extends BaseExchangeRequest {
+    /** Action to be performed. */
+    action: {
+        /** Type of action. */
+        type: "approveAgent";
+        /** HyperLiquid network. */
+        hyperliquidChain: "Mainnet" | "Testnet";
+        /** Chain ID used for signing. */
+        signatureChainId: Hex;
+        /** Unique request identifier (current timestamp in ms). */
+        nonce: number;
+        /** Agent address. */
+        agentAddress: Hex;
+    };
+}
+
 /**
  * Approve a maximum fee rate for a builder.
  * @returns {SuccessResponse}
