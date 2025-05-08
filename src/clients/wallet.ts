@@ -111,7 +111,7 @@ export interface WalletClientParameters<
 /** Parameters for the {@linkcode WalletClient.approveAgent} method. */
 export type ApproveAgentParameters = Omit<
     ApproveAgentRequest["action"],
-    "type" | "hyperliquidChain" | "signatureChainId" | "nonce"
+    "type" | "hyperliquidChain" | "signatureChainId" | "nonce" | "agentName"
 >;
 
 /** Parameters for the {@linkcode WalletClient.approveBuilderFee} method. */
