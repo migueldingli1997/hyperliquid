@@ -561,7 +561,6 @@ export class WalletClient<
                 "HyperliquidTransaction:ApproveAgent": [
                     { name: "hyperliquidChain", type: "string" },
                     { name: "agentAddress", type: "address" },
-                    { name: "agentName", type: "string" },
                     { name: "nonce", type: "uint64" },
                 ],
             },
